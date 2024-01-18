@@ -9,3 +9,94 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Student {
+  id            Int          @id @default(autoincrement())
+  phone         String       @unique
+  email         String       @unique
+  fullName      String
+  gender        Gender
+  major         String?
+  dob           DateTime?
+  graduatedDate DateTime?
+  gpa           Float?
+  address       String?
+  status        StudenStatus
+  reCer         String?
+  joinedDate    DateTime     @default(now())
+  university    String?
+  classCode     Int
+  currentClass  Class        @relation(fields: [classCode], references: [id])
+
+  studentClasses StudentClass[]
+}
+
+model User {
+  id   Int  @id @default(autoincrement())
+  role Role
+
+  createdClasses Class[] @relation("CreatedClasses")
+  updatedClasses Class[] @relation("UpdatedClasses")
+  managedClass   Class[]
+}
+
+model Program {
+  id Int @id @default(autoincrement())
+
+  classes Class[]
+}
+
+model Class {
+  id            Int         @id @default(autoincrement())
+  className     String      @unique
+  startDate     DateTime
+  endDate       DateTime?
+  createdDate   DateTime    @default(now())
+  createdUserId Int
+  updatedDate   DateTime?
+  updatedUserId Int?
+  duration      String
+  location      String
+  status        ClassStatus
+  programId     Int
+
+  managers       User[]
+  program        Program        @relation(fields: [programId], references: [id])
+  createdUser    User           @relation(name: "CreatedClasses", fields: [createdUserId], references: [id])
+  updatedUser    User?          @relation(name: "UpdatedClasses", fields: [updatedUserId], references: [id])
+  students       Student[]
+  studentClasses StudentClass[]
+}
+
+model StudentClass {
+  class     Class   @relation(fields: [classId], references: [id])
+  classId   Int
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+
+  @@id([classId, studentId])
+}
+
+enum Gender {
+  Male
+  Female
+  Other
+}
+
+enum StudenStatus {
+  Active
+  InActive
+  Disable
+}
+
+enum ClassStatus {
+  Active
+  InActive
+  Disable
+}
+
+enum Role {
+  SuperAdmin
+  ClassAdmin
+  Trainer
+}
