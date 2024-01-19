@@ -29,6 +29,16 @@ model Student {
   currentClass  Class        @relation(fields: [classCode], references: [id])
 
   studentClasses StudentClass[]
+  Reservation    Reservation?
+}
+
+model Reservation {
+  id        Int @id @default(autoincrement())
+  classId   Int
+  studentId Int @unique
+
+  student Student @relation(fields: [studentId], references: [id])
+  class   Class   @relation(fields: [classId], references: [id])
 }
 
 model User {
@@ -66,6 +76,7 @@ model Class {
   updatedUser    User?          @relation(name: "UpdatedClasses", fields: [updatedUserId], references: [id])
   students       Student[]
   studentClasses StudentClass[]
+  Reservation    Reservation[]
 }
 
 model StudentClass {
