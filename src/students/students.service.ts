@@ -16,4 +16,8 @@ export class StudentsService {
       }
     })
   }
+
+  async getStudents(): Promise<Student[]> {
+    return await this.prisma.student.findMany()
+  }
 }

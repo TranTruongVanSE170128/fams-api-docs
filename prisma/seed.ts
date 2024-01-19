@@ -27,6 +27,23 @@ async function main() {
       programId: 1
     }
   })
+
+  await prisma.student.create({
+    data: {
+      id: 1,
+      phone: '0933131464',
+      email: 'kingchenobama711@gmail.com',
+      fullName: 'Trần Trương Văn',
+      gender: 'Male',
+      major: 'Software Engineering',
+      dob: '2003-11-07T17:16:37.286Z',
+      gpa: 8,
+      university: 'FPT HCM',
+      classCode: 1,
+      status: 'Active',
+      joinedDate: new Date()
+    }
+  })
 }
 main()
   .then(async () => {

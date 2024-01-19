@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Gender } from '@prisma/client'
 import {
   IsDate,
@@ -36,37 +36,37 @@ export class CreateStudentDto {
   @IsIn(['Male', 'Female'], { message: 'Invalid gender' })
   gender: Gender
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   major: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
   dob: Date
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
   graduatedDate: Date
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsNumber({ maxDecimalPlaces: 1 })
   gpa: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   address: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   reCer: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   university: string

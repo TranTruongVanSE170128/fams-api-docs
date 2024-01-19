@@ -11,9 +11,9 @@ datasource db {
 }
 
 model Student {
-  id            Int          @id @default(autoincrement())
-  phone         String       @unique
-  email         String       @unique
+  id            Int           @id @default(autoincrement())
+  phone         String        @unique
+  email         String        @unique
   fullName      String
   gender        Gender
   major         String?
@@ -21,13 +21,13 @@ model Student {
   graduatedDate DateTime?
   gpa           Float?
   address       String?
-  status        StudenStatus
+  status        StudentStatus
   reCer         String?
-  joinedDate    DateTime     @default(now())
+  joinedDate    DateTime      @default(now())
   university    String?
   classCode     Int
-  currentClass  Class        @relation(fields: [classCode], references: [id])
 
+  currentClass   Class          @relation(fields: [classCode], references: [id])
   studentClasses StudentClass[]
   Reservation    Reservation?
 }
@@ -94,7 +94,7 @@ enum Gender {
   Other
 }
 
-enum StudenStatus {
+enum StudentStatus {
   Active
   InActive
   Disable
