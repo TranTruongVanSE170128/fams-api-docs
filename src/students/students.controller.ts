@@ -13,10 +13,10 @@ export class StudentsController {
 
   @ApiOperation({ summary: 'Get students' })
   @ApiResponse({ status: 200, description: 'Success', type: [GetStudentDto] })
-  @ApiQuery({ name: 'pageSize', type: Number })
-  @ApiQuery({ name: 'pageNumber', type: Number })
-  @ApiQuery({ name: 'searchQuery', type: String })
-  @ApiQuery({ name: 'status', type: String, enum: StudentStatus })
+  @ApiQuery({ name: 'pageSize', type: Number, required: false })
+  @ApiQuery({ name: 'pageNumber', type: Number, required: false })
+  @ApiQuery({ name: 'searchQuery', type: String, required: false })
+  @ApiQuery({ name: 'status', type: String, enum: StudentStatus, required: false })
   @Get()
   async getStudents(
     @Query() pageSize: number,

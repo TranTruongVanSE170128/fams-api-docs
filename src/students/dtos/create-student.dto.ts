@@ -11,6 +11,7 @@ import {
   IsOptional,
   IsString,
   Matches,
+  Max,
   Min,
   MinLength
 } from 'class-validator'
@@ -48,8 +49,10 @@ export class CreateStudentDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsDateString()
-  graduatedDate: Date
+  @IsInt()
+  @Min(1900)
+  @Max(new Date().getFullYear())
+  graduatedDate: number
 
   @ApiPropertyOptional()
   @IsOptional()
