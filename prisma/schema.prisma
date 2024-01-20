@@ -25,11 +25,11 @@ model Student {
   reCer         String?
   joinedDate    DateTime      @default(now())
   university    String?
-  classCode     Int
+  classCode     Int?
 
-  currentClass   Class          @relation(fields: [classCode], references: [id])
+  currentClass   Class?         @relation(fields: [classCode], references: [id])
   studentClasses StudentClass[]
-  Reservation    Reservation?
+  reservation    Reservation?
 }
 
 model Reservation {
@@ -77,14 +77,18 @@ model Class {
   updatedUser    User?          @relation(name: "UpdatedClasses", fields: [updatedUserId], references: [id])
   students       Student[]
   studentClasses StudentClass[]
-  Reservation    Reservation[]
+  reservations   Reservation[]
 }
 
 model StudentClass {
-  class     Class   @relation(fields: [classId], references: [id])
-  classId   Int
-  student   Student @relation(fields: [studentId], references: [id])
-  studentId Int
+  classId           Int
+  studentId         Int
+  attendingStatus   AttendingStatus
+  certificateStatus CertificateStatus
+  certificateDate   DateTime?
+
+  class   Class   @relation(fields: [classId], references: [id])
+  student Student @relation(fields: [studentId], references: [id])
 
   @@id([classId, studentId])
 }
@@ -104,6 +108,18 @@ enum StudentStatus {
 enum ClassStatus {
   Active
   InActive
+  Disable
+}
+
+enum AttendingStatus {
+  InClass
+  Reserve
+  Finish
+  DropOut
+}
+
+enum CertificateStatus {
+  Enable
   Disable
 }
 

@@ -37,31 +37,31 @@ async function main() {
         className: 'NET_01',
         duration: '25 days (75 hours)',
         location: 'Hồ Chí Minh',
-        startDate: new Date(),
+        startDate: '2023-12-25T00:00:00.000Z',
         status: 'Active',
-        createdDate: new Date(),
+        createdDate: '2023-12-13T00:00:00.000Z',
         createdUserId: 1,
         programId: 1
       },
       {
         id: 2,
-        className: 'React_01',
+        className: 'REACT_01',
         duration: '28 days (84 hours)',
         location: 'Hà Nội',
-        startDate: new Date(),
+        startDate: '2024-01-25T00:00:00.000Z',
         status: 'Active',
-        createdDate: new Date(),
+        createdDate: '2023-12-31T00:00:00.000Z',
         createdUserId: 2,
         programId: 2
       },
       {
         id: 3,
-        className: 'Test_01',
+        className: 'TEST_01',
         duration: '15 days (45 hours)',
         location: 'Đà Nẵng',
-        startDate: new Date(),
+        startDate: '2024-01-15T00:00:00.000Z',
         status: 'Active',
-        createdDate: new Date(),
+        createdDate: '2023-12-17T00:00:00.000Z',
         createdUserId: 1,
         programId: 3
       }
@@ -99,7 +99,7 @@ async function main() {
         university: 'ĐH Khoa học Tự Nhiên TP.HCM',
         classCode: 2,
         status: 'Active',
-        joinedDate: '2023-12-29T00:00:00.000Z',
+        joinedDate: '2024-01-02T00:00:00.000Z',
         address: 'phường Phú Mỹ, quận 7, thành phố Hồ Chí Minh',
         reCer: 'Admin TS',
         graduatedDate: 2021
@@ -116,7 +116,7 @@ async function main() {
         university: 'Đại học Bách Khoa TP.HCM',
         classCode: 3,
         status: 'Active',
-        joinedDate: '2024-01-15T00:00:00.000Z',
+        joinedDate: '2024-01-05T00:00:00.000Z',
         address: 'phường Bến Nghé, quận 1, thành phố Hồ Chí Minh',
         reCer: 'Admin TS',
         graduatedDate: 2022
@@ -133,10 +133,39 @@ async function main() {
         university: 'ĐH Quốc Gia TP.HCM',
         classCode: 2,
         status: 'Active',
-        joinedDate: '2024-01-05T00:00:00.000Z',
+        joinedDate: '2024-01-07T00:00:00.000Z',
         address: 'phường Võ Thị Sáu, quận 3, thành phố Hồ Chí Minh',
         reCer: 'Admin NTS',
         graduatedDate: 2021
+      }
+    ]
+  })
+
+  await prisma.studentClass.createMany({
+    data: [
+      {
+        studentId: 1,
+        classId: 1,
+        attendingStatus: 'InClass',
+        certificateStatus: 'Disable'
+      },
+      {
+        studentId: 2,
+        classId: 2,
+        attendingStatus: 'InClass',
+        certificateStatus: 'Disable'
+      },
+      {
+        studentId: 3,
+        classId: 3,
+        attendingStatus: 'InClass',
+        certificateStatus: 'Disable'
+      },
+      {
+        studentId: 4,
+        classId: 2,
+        attendingStatus: 'InClass',
+        certificateStatus: 'Disable'
       }
     ]
   })
