@@ -1,11 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common'
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { ClassesService } from './classes.service'
 import { GetClassDto } from './dtos/get-class.dto'
 import { GetClassDetailDto } from './dtos/get-class-detail.dto'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { ImportStudentsDto } from './dtos/import-students.dto'
 
 @ApiTags('classes')
-@Controller('classes')
+@Controller('api/classes')
 export class ClassesController {
   constructor(private classService: ClassesService) {}
 
@@ -30,5 +32,34 @@ export class ClassesController {
     return {}
   }
 
-  //TODO:Get student detail by class
+  @ApiOperation({
+    summary: 'Import students to an specified class by template excel file'
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        option: { type: 'string', enum: ['Duplicate', 'Skip', 'Replace'] },
+        addStudentsTemplate: {
+          type: 'string',
+          format: 'binary'
+        }
+      }
+    }
+  })
+  @UseInterceptors(FileInterceptor('addStudentsTemplate'))
+  @Post(':id/add-students-by-excel')
+  async ImportStudentsToClass(
+    @Param('id') id: string,
+    @Body() body: ImportStudentsDto,
+    @UploadedFile() addStudentsTemplate
+  ) {
+    //TODO
+    return {
+      id,
+      body,
+      addStudentsTemplate
+    }
+  }
 }

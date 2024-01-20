@@ -9,7 +9,7 @@ import { GetStudentDetailDto } from './dtos/get-student-detail.dto'
 import { UpdateStudentDto } from './dtos/update-student.dto'
 
 @ApiTags('students')
-@Controller('students')
+@Controller('/api/students')
 export class StudentsController {
   constructor(private studentService: StudentsService) {}
 
