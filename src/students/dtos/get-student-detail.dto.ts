@@ -27,7 +27,7 @@ export class GetStudentDetailDto {
   dob: Date
 
   @ApiResponseProperty()
-  graduatedDate: Date
+  graduatedDate: number
 
   @ApiResponseProperty()
   gpa: number

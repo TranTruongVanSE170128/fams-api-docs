@@ -13,7 +13,7 @@ export class ClassesController {
   @ApiResponse({ status: 200, description: 'Success', type: GetClassDetailDto })
   @ApiParam({ name: 'id', type: Number })
   @Get(':id')
-  async getClassDetail(@Param('id') id: number) {
+  async getClassDetail(@Param('id') id: string) {
     return await this.classService.getRequiredClassDetailById(Number(id))
   }
 
@@ -24,7 +24,7 @@ export class ClassesController {
   @ApiParam({ name: 'classId', type: Number })
   @ApiParam({ name: 'studentId', type: Number })
   @Get(':classId/students/:studentId')
-  async getStudentDetailByClass(@Param('classId') classId: number, @Param('studentId') studentId: number) {
+  async getStudentDetailByClass(@Param('classId') classId: string, @Param('studentId') studentId: string) {
     //TODO: the result should be filtered the suitable module and assignment of the student in this class
     // return await this.classService.getRequiredClassDetailById(Number(id))
     return {}

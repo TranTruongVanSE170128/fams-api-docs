@@ -3,6 +3,7 @@ import { Student } from '@prisma/client'
 import { ClassesService } from 'src/classes/classes.service'
 import { PrismaService } from 'src/prisma.service'
 import { CreateStudentDto } from 'src/students/dtos/create-student.dto'
+import { UpdateStudentDto } from './dtos/update-student.dto'
 
 @Injectable()
 export class StudentsService {
@@ -72,5 +73,26 @@ export class StudentsService {
     }
 
     throw new NotFoundException('Could not find student')
+  }
+
+  async getRequiredStudentById(id: number): Promise<Student | null> {
+    const result = await this.prisma.student.findUnique({ where: { id } })
+
+    if (result) {
+      return result
+    }
+
+    throw new NotFoundException('Could not find student')
+  }
+
+  async updateStudent(id: number, body: UpdateStudentDto) {
+    await this.getRequiredStudentById(id)
+
+    return await this.prisma.student.update({
+      where: {
+        id
+      },
+      data: body
+    })
   }
 }

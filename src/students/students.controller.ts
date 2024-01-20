@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common'
 import { StudentsService } from './students.service'
 import { CreateStudentDto } from 'src/students/dtos/create-student.dto'
 import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
@@ -6,6 +6,7 @@ import { GetStudentDto } from './dtos/get-student.dto'
 import { StudentStatus } from '@prisma/client'
 import { getProperty } from 'src/utils'
 import { GetStudentDetailDto } from './dtos/get-student-detail.dto'
+import { UpdateStudentDto } from './dtos/update-student.dto'
 
 @ApiTags('students')
 @Controller('students')
@@ -31,16 +32,24 @@ export class StudentsController {
 
   @ApiOperation({ summary: 'Get student detail by studentId' })
   @ApiResponse({ status: 200, description: 'Success', type: GetStudentDetailDto })
-  @ApiParam({ name: 'id', type: Number })
   @Get(':id')
-  async getStudentDetail(@Param('id') id: number) {
+  async getStudentDetail(@Param('id') id: string) {
     return await this.studentService.getRequiredStudentDetailById(Number(id))
   }
 
-  @ApiOperation({ summary: 'Create a new user' })
+  @ApiOperation({
+    summary: 'Create a new student. Class code is required and the student will be assigned in that class.'
+  })
   @ApiResponse({ status: 200, description: 'Success', type: GetStudentDto })
   @Post()
   async insertStudent(@Body() body: CreateStudentDto) {
     return await this.studentService.insertStudent(body)
+  }
+
+  @ApiOperation({ summary: 'Update basic information a student' })
+  @ApiResponse({ status: 200, description: 'Success', type: GetStudentDto })
+  @Patch(':id')
+  async updateStudent(@Param('id') id: string, @Body() body: UpdateStudentDto) {
+    return await this.studentService.updateStudent(Number(id), body)
   }
 }

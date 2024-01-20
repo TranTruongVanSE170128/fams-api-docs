@@ -1,10 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Gender } from '@prisma/client'
 import {
-  IsDate,
   IsDateString,
-  IsDecimal,
-  IsEmail,
   IsIn,
   IsInt,
   IsNumber,
@@ -15,67 +12,59 @@ import {
   Min,
   MinLength
 } from 'class-validator'
-import { Transform } from 'class-transformer'
 
-export class CreateStudentDto {
-  @ApiProperty()
+export class UpdateStudentDto {
+  @ApiPropertyOptional()
   @Matches(/^0\d{9}$/, {
     message: 'Invalid phone number'
   })
-  phone: string
-
-  @ApiProperty()
-  @IsEmail()
-  @Transform(({ value }) => value.toLowerCase().trim())
-  email: string
-
-  @ApiProperty()
-  @MinLength(2, { message: 'Invalid full name' })
-  fullName: string
-
-  @ApiProperty()
-  @IsIn(['Male', 'Female'], { message: 'Invalid gender' })
-  gender: Gender
+  @IsOptional()
+  phone?: string
 
   @ApiPropertyOptional()
-  @IsString()
+  @MinLength(2, { message: 'Invalid full name' })
   @IsOptional()
-  major: string
+  fullName?: string
+
+  @ApiPropertyOptional()
+  @IsIn(['Male', 'Female'], { message: 'Invalid gender' })
+  @IsOptional()
+  gender?: Gender
+
+  @ApiPropertyOptional()
+  @IsString({ message: 'Invalid major' })
+  @IsOptional()
+  major?: string
 
   @ApiPropertyOptional()
   @IsDateString()
   @IsOptional()
-  dob: Date
+  dob?: Date
 
   @ApiPropertyOptional()
-  @IsInt()
+  @IsInt({ message: 'Invalid major' })
   @Min(1900)
   @Max(new Date().getFullYear())
   @IsOptional()
-  graduatedDate: number
+  graduatedDate?: number
 
   @ApiPropertyOptional()
   @IsNumber({ maxDecimalPlaces: 1 })
   @IsOptional()
-  gpa: number
+  gpa?: number
 
   @ApiPropertyOptional()
-  @IsString()
+  @IsString({ message: 'Invalid gender' })
   @IsOptional()
-  address: string
+  address?: string
 
   @ApiPropertyOptional()
-  @IsString()
+  @IsString({ message: 'Invalid gender' })
   @IsOptional()
-  reCer: string
+  reCer?: string
 
   @ApiPropertyOptional()
-  @IsString()
+  @IsString({ message: 'Invalid gender' })
   @IsOptional()
-  university: string
-
-  @ApiProperty()
-  @IsInt()
-  @Min(1)
-  classCode: number
+  university?: string
 }
