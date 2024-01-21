@@ -11,12 +11,28 @@ export class FilesController {
       'Just access this endpoint by <Link href="/api/files/add-students-template"></Link>, then you get add-students-template.xlsx'
   })
   @Get('add-students-template')
-  downloadExcel(@Res() res: Response) {
+  getAddStudentsTemplate(@Res() res: Response) {
     const xlsxFilePath = path.join(__dirname, '../../public/add-students-template.xlsx')
 
     // Thiết lập header cho response để browser hiểu rằng đây là một file tải về
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     res.setHeader('Content-Disposition', 'attachment; filename=add-students-template.xlsx')
+
+    // Đọc file XLSX và ghi nó vào response
+    res.sendFile(xlsxFilePath)
+  }
+
+  @ApiOperation({
+    summary:
+      'Just access this endpoint by <Link href="/api/files/add-scores-template"></Link>, then you get add-scores-template.xlsx'
+  })
+  @Get('add-scores-template')
+  getAddScoresTemplate(@Res() res: Response) {
+    const xlsxFilePath = path.join(__dirname, '../../public/add-scores-template.xlsx')
+
+    // Thiết lập header cho response để browser hiểu rằng đây là một file tải về
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    res.setHeader('Content-Disposition', 'attachment; filename=add-scores-template.xlsx')
 
     // Đọc file XLSX và ghi nó vào response
     res.sendFile(xlsxFilePath)
