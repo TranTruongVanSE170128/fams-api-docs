@@ -52,7 +52,8 @@ model User {
 }
 
 model Program {
-  id Int @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
+  programName String
 
   classes Class[]
 }

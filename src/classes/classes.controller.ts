@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { ClassesService } from './classes.service'
 import { GetClassDto } from './dtos/get-class.dto'
 import { GetClassDetailDto } from './dtos/get-class-detail.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ImportStudentsDto } from './dtos/import-students.dto'
+import { UpdateStudentAttendingStatusDto } from './dtos/update-students-attending-status.dto'
 
 @ApiTags('classes')
 @Controller('api/classes')
@@ -31,6 +32,15 @@ export class ClassesController {
     // return await this.classService.getRequiredClassDetailById(Number(id))
     return {}
   }
+
+  @ApiOperation({ summary: 'Update the attending status of many students in class who have the same attending status' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiParam({ name: 'id', type: Number })
+  @Patch(':id/update-students-status')
+  async updateStudentsStatus(@Param('id') id: string, @Body() body: UpdateStudentAttendingStatusDto) {
+    //TODO
+  }
+  //TODO:3.1.6 loại 2
 
   @ApiOperation({
     summary: 'Import students to an specified class by template excel file'
@@ -62,4 +72,6 @@ export class ClassesController {
       addStudentsTemplate
     }
   }
+
+  //TODO: Cân nhắc loại bỏ chức năng disable student
 }

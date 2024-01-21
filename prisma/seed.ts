@@ -19,13 +19,16 @@ async function main() {
   await prisma.program.createMany({
     data: [
       {
-        id: 1
+        id: 1,
+        programName: 'ASP NET CORE 2024'
       },
       {
-        id: 2
+        id: 2,
+        programName: 'The Ultimate React Complete Guide'
       },
       {
-        id: 3
+        id: 3,
+        programName: 'Software Testing Bootcamp'
       }
     ]
   })

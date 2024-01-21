@@ -64,7 +64,15 @@ export class StudentsService {
       include: {
         currentClass: true,
         reservation: true,
-        studentClasses: true
+        studentClasses: {
+          include: {
+            class: {
+              include: {
+                program: true
+              }
+            }
+          }
+        }
       }
     })
 

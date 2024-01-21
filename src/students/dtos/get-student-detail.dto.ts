@@ -2,6 +2,7 @@ import { ApiResponseProperty } from '@nestjs/swagger'
 import { Class, Gender, Reservation, StudentClass, StudentStatus } from '@prisma/client'
 import { GetClassDto } from 'src/classes/dtos/get-class.dto'
 import { GetReservationDto } from 'src/reservations/dtos/get-reservation.dto'
+import { GetStudentClassWithProgramDto } from 'src/student-classes/dtos/get-student-class-with-program.dto'
 import { GetStudentClassDto } from 'src/student-classes/dtos/get-student-class.dto'
 
 export class GetStudentDetailDto {
@@ -53,8 +54,8 @@ export class GetStudentDetailDto {
   @ApiResponseProperty()
   currentClass: GetClassDto
 
-  @ApiResponseProperty({ type: [GetStudentClassDto] })
-  studentClasses: GetStudentClassDto[]
+  @ApiResponseProperty({ type: [GetStudentClassWithProgramDto] })
+  studentClasses: GetStudentClassWithProgramDto[]
 
   @ApiResponseProperty()
   reservation: GetReservationDto
