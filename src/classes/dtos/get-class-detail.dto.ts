@@ -62,5 +62,5 @@ export class GetClassDetailDto {
   studentClasses: StudentClass[]
 
   @ApiResponseProperty({ type: [GetReservationDto] })
-  reservations: Reservation[]
+  reservations: GetReservationDto[]
 }

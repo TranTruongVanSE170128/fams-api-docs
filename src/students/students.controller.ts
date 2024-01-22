@@ -4,9 +4,9 @@ import { CreateStudentDto } from 'src/students/dtos/create-student.dto'
 import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { GetStudentDto } from './dtos/get-student.dto'
 import { StudentStatus } from '@prisma/client'
-import { getProperty } from 'src/utils'
 import { GetStudentDetailDto } from './dtos/get-student-detail.dto'
 import { UpdateStudentDto } from './dtos/update-student.dto'
+import { PagedResultStudent } from './dtos/paged-result-students.dto'
 
 @ApiTags('students')
 @Controller('/api/students')
@@ -14,9 +14,9 @@ export class StudentsController {
   constructor(private studentService: StudentsService) {}
 
   @ApiOperation({ summary: 'Get students' })
-  @ApiResponse({ status: 200, description: 'Success', type: [GetStudentDto] })
-  @ApiQuery({ name: 'pageSize', type: Number, required: false })
-  @ApiQuery({ name: 'pageNumber', type: Number, required: false })
+  @ApiResponse({ status: 200, description: 'Success', type: PagedResultStudent })
+  @ApiQuery({ name: 'pageSize', type: Number, required: false, description: 'default 10' })
+  @ApiQuery({ name: 'pageNumber', type: Number, required: false, description: 'default 1' })
   @ApiQuery({ name: 'searchQuery', type: String, required: false })
   @ApiQuery({ name: 'status', type: String, enum: StudentStatus, required: false })
   @Get()

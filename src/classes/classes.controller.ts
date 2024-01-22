@@ -6,6 +6,7 @@ import { GetClassDetailDto } from './dtos/get-class-detail.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ImportStudentsDto } from './dtos/import-students.dto'
 import { UpdateStudentAttendingStatusDto } from './dtos/update-students-attending-status.dto'
+import { ImportScoresDto } from './dtos/import-score.dto'
 
 @ApiTags('classes')
 @Controller('api/classes')
@@ -74,4 +75,31 @@ export class ClassesController {
   }
 
   //TODO: Cân nhắc loại bỏ chức năng disable student
+
+  @ApiOperation({
+    summary: 'Import scores to an specified class by template excel file'
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        option: { type: 'string', enum: ['Duplicate', 'Skip', 'Replace'] },
+        addScoresTemplate: {
+          type: 'string',
+          format: 'binary'
+        }
+      }
+    }
+  })
+  @UseInterceptors(FileInterceptor('addScoresTemplate'))
+  @Post(':id/add-scores-by-excel')
+  async ImportScoresToClass(@Param('id') id: string, @Body() body: ImportScoresDto, @UploadedFile() addScoresTemplate) {
+    //TODO
+    return {
+      id,
+      body,
+      addScoresTemplate
+    }
+  }
 }

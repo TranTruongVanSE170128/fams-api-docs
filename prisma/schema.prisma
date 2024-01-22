@@ -33,12 +33,17 @@ model Student {
 }
 
 model Reservation {
-  id        Int @id @default(autoincrement())
+  // id        Int      @id @default(autoincrement())
   classId   Int
-  studentId Int @unique
+  studentId Int      @unique
+  reason    String
+  startDate DateTime
+  endDate   DateTime
 
   student Student @relation(fields: [studentId], references: [id])
   class   Class   @relation(fields: [classId], references: [id])
+
+  @@id([classId, studentId])
 }
 
 model User {
