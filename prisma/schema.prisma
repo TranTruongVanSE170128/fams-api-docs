@@ -27,9 +27,11 @@ model Student {
   university    String?
   classCode     Int?
 
-  currentClass   Class?         @relation(fields: [classCode], references: [id])
+  currentClass   Class?          @relation(fields: [classCode], references: [id])
   studentClasses StudentClass[]
   reservation    Reservation?
+  studentClassModules StudentClassModule[]
+  scores         Score[]
 }
 
 model Reservation {
@@ -51,9 +53,13 @@ model User {
   role     Role
   fullName String
 
-  createdClasses Class[] @relation("CreatedClasses")
-  updatedClasses Class[] @relation("UpdatedClasses")
-  managedClass   Class[]
+  createdClasses     Class[]      @relation("CreatedClasses")
+  updatedClasses     Class[]      @relation("UpdatedClasses")
+  createdModules     Module[]     @relation("CreatedModules")
+  updatedModules     Module[]     @relation("UpdatedModules")
+  createdAssignments Assignment[] @relation("CreatedAssignments")
+  updatedAssignments Assignment[] @relation("UpdatedAssignments")
+  managedClass       Class[]
 }
 
 model Program {
@@ -61,6 +67,67 @@ model Program {
   programName String
 
   classes Class[]
+  modules Module[]
+}
+
+model Module {
+  id            Int       @id @default(autoincrement())
+  moduleName    String
+  createdDate   DateTime  @default(now())
+  createdUserId Int
+  updatedDate   DateTime?
+  updatedUserId Int?
+
+  createdUser    User            @relation(name: "CreatedModules", fields: [createdUserId], references: [id])
+  updatedUser    User?           @relation(name: "UpdatedModules", fields: [updatedUserId], references: [id])
+  programs       Program[]
+  assignments    Assignment[]
+  studentClassModules StudentClassModule[]
+}
+
+model StudentClassModule {
+  moduleId    Int
+  studentId   Int
+  classId     Int
+  moduleScore Int
+  moduleLevel Int
+
+  student Student @relation(fields: [studentId], references: [id])
+  module  Module  @relation(fields: [moduleId], references: [id])
+  class   Class   @relation(fields: [classId], references: [id])
+
+  @@id([moduleId, studentId, classId])
+}
+
+model Score {
+  assignmentId   Int
+  studentId      Int
+  classId     Int
+  scoreValue     Int
+  submissionDate DateTime
+
+  student    Student    @relation(fields: [studentId], references: [id])
+  assignment Assignment @relation(fields: [assignmentId], references: [id])
+  class   Class   @relation(fields: [classId], references: [id])
+
+  @@id([assignmentId, studentId,classId])
+}
+
+model Assignment {
+  id             Int       @id @default(autoincrement())
+  moduleId       Int
+  assignmentName String
+  assignmentType String
+  description    String
+  createdDate    DateTime  @default(now())
+  createdUserId  Int
+  updatedDate    DateTime?
+  updatedUserId  Int?
+
+  createdUser User    @relation(name: "CreatedAssignments", fields: [createdUserId], references: [id])
+  updatedUser User?   @relation(name: "UpdatedAssignments", fields: [updatedUserId], references: [id])
+  module      Module  @relation(fields: [moduleId], references: [id])
+  scores      Score[]
 }
 
 model Class {
@@ -78,12 +145,14 @@ model Class {
   programId     Int
 
   managers       User[]
-  program        Program        @relation(fields: [programId], references: [id])
-  createdUser    User           @relation(name: "CreatedClasses", fields: [createdUserId], references: [id])
-  updatedUser    User?          @relation(name: "UpdatedClasses", fields: [updatedUserId], references: [id])
+  program        Program         @relation(fields: [programId], references: [id])
+  createdUser    User            @relation(name: "CreatedClasses", fields: [createdUserId], references: [id])
+  updatedUser    User?           @relation(name: "UpdatedClasses", fields: [updatedUserId], references: [id])
   students       Student[]
   studentClasses StudentClass[]
   reservations   Reservation[]
+  studentClassModules StudentClassModule[]
+  scores         Score[]
 }
 
 model StudentClass {

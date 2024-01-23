@@ -7,6 +7,8 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { ImportStudentsDto } from './dtos/import-students.dto'
 import { UpdateStudentAttendingStatusDto } from './dtos/update-students-attending-status.dto'
 import { ImportScoresDto } from './dtos/import-score.dto'
+import { GetStudentDetailDto } from 'src/students/dtos/get-student-detail.dto'
+import { GetClassScoresDto } from './dtos/get-class-scores.dto'
 
 @ApiTags('classes')
 @Controller('api/classes')
@@ -23,8 +25,9 @@ export class ClassesController {
 
   @ApiOperation({
     summary:
-      'Get student detail by class, the result will be filtered the suitable module and assignment of the student in this class'
+      'Get student detail by class, same with /api/students/{id} but the result will be filtered the suitable module and assignment of the student in this class'
   })
+  @ApiResponse({ status: 200, description: 'Success', type: GetStudentDetailDto })
   @ApiParam({ name: 'classId', type: Number })
   @ApiParam({ name: 'studentId', type: Number })
   @Get(':classId/students/:studentId')
@@ -101,5 +104,13 @@ export class ClassesController {
       body,
       addScoresTemplate
     }
+  }
+
+  @ApiOperation({ summary: 'Get scores of a class' })
+  @ApiResponse({ status: 200, description: 'Success', type: GetClassScoresDto })
+  @ApiParam({ name: 'id', type: Number })
+  @Get(':id/scores')
+  async getScores(@Param('id') id: string) {
+    // return await this.classService.getRequiredClassDetailById(Number(id))
   }
 }
