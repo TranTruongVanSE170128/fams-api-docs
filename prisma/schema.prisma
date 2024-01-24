@@ -27,11 +27,12 @@ model Student {
   university    String?
   classCode     Int?
 
-  currentClass   Class?          @relation(fields: [classCode], references: [id])
-  studentClasses StudentClass[]
-  reservation    Reservation?
+  currentClass        Class?               @relation(fields: [classCode], references: [id])
+  studentClasses      StudentClass[]
+  reservation         Reservation?
   studentClassModules StudentClassModule[]
-  scores         Score[]
+  scores              Score[]
+  emailRecipients     EmailRecipient[]
 }
 
 model Reservation {
@@ -53,21 +54,33 @@ model User {
   role     Role
   fullName String
 
-  createdClasses     Class[]      @relation("CreatedClasses")
-  updatedClasses     Class[]      @relation("UpdatedClasses")
-  createdModules     Module[]     @relation("CreatedModules")
-  updatedModules     Module[]     @relation("UpdatedModules")
-  createdAssignments Assignment[] @relation("CreatedAssignments")
-  updatedAssignments Assignment[] @relation("UpdatedAssignments")
-  managedClass       Class[]
+  createdClasses        Class[]          @relation("CreatedClasses")
+  updatedClasses        Class[]          @relation("UpdatedClasses")
+  createdPrograms       Program[]        @relation("CreatedPrograms")
+  updatedPrograms       Program[]        @relation("UpdatedPrograms")
+  createdModules        Module[]         @relation("CreatedModules")
+  updatedModules        Module[]         @relation("UpdatedModules")
+  createdAssignments    Assignment[]     @relation("CreatedAssignments")
+  updatedAssignments    Assignment[]     @relation("UpdatedAssignments")
+  createdEmailTemplates EmailTemplate[]  @relation("CreatedEmailTemplates")
+  updatedEmailTemplates EmailTemplate[]  @relation("UpdatedEmailTemplates")
+  managedClass          Class[]
+  emailSends            EmailSend[]
+  emailRecipients       EmailRecipient[]
 }
 
 model Program {
-  id          Int    @id @default(autoincrement())
-  programName String
+  id            Int       @id @default(autoincrement())
+  programName   String
+  createdDate   DateTime  @default(now())
+  createdUserId Int
+  updatedDate   DateTime?
+  updatedUserId Int?
 
-  classes Class[]
-  modules Module[]
+  createdUser User     @relation(name: "CreatedPrograms", fields: [createdUserId], references: [id])
+  updatedUser User?    @relation(name: "UpdatedPrograms", fields: [updatedUserId], references: [id])
+  classes     Class[]
+  modules     Module[]
 }
 
 model Module {
@@ -78,10 +91,10 @@ model Module {
   updatedDate   DateTime?
   updatedUserId Int?
 
-  createdUser    User            @relation(name: "CreatedModules", fields: [createdUserId], references: [id])
-  updatedUser    User?           @relation(name: "UpdatedModules", fields: [updatedUserId], references: [id])
-  programs       Program[]
-  assignments    Assignment[]
+  createdUser         User                 @relation(name: "CreatedModules", fields: [createdUserId], references: [id])
+  updatedUser         User?                @relation(name: "UpdatedModules", fields: [updatedUserId], references: [id])
+  programs            Program[]
+  assignments         Assignment[]
   studentClassModules StudentClassModule[]
 }
 
@@ -102,15 +115,15 @@ model StudentClassModule {
 model Score {
   assignmentId   Int
   studentId      Int
-  classId     Int
+  classId        Int
   scoreValue     Int
   submissionDate DateTime
 
   student    Student    @relation(fields: [studentId], references: [id])
   assignment Assignment @relation(fields: [assignmentId], references: [id])
-  class   Class   @relation(fields: [classId], references: [id])
+  class      Class      @relation(fields: [classId], references: [id])
 
-  @@id([assignmentId, studentId,classId])
+  @@id([assignmentId, studentId, classId])
 }
 
 model Assignment {
@@ -144,15 +157,55 @@ model Class {
   status        ClassStatus
   programId     Int
 
-  managers       User[]
-  program        Program         @relation(fields: [programId], references: [id])
-  createdUser    User            @relation(name: "CreatedClasses", fields: [createdUserId], references: [id])
-  updatedUser    User?           @relation(name: "UpdatedClasses", fields: [updatedUserId], references: [id])
-  students       Student[]
-  studentClasses StudentClass[]
-  reservations   Reservation[]
+  managers            User[]
+  program             Program              @relation(fields: [programId], references: [id])
+  createdUser         User                 @relation(name: "CreatedClasses", fields: [createdUserId], references: [id])
+  updatedUser         User?                @relation(name: "UpdatedClasses", fields: [updatedUserId], references: [id])
+  students            Student[]
+  studentClasses      StudentClass[]
+  reservations        Reservation[]
   studentClassModules StudentClassModule[]
-  scores         Score[]
+  scores              Score[]
+  emailRecipients     EmailRecipient[]
+}
+
+model EmailRecipient {
+  id                   Int    @id @default(autoincrement())
+  emailSendId          Int
+  receiverStudentId    Int?
+  receiverClassId      Int?
+  receiverUserId       Int?
+  receivedEmailAddress String
+
+  emailSend       EmailSend @relation(fields: [emailSendId], references: [id])
+  receiverStudent Student?  @relation(fields: [receiverStudentId], references: [id])
+  receiverClass   Class?    @relation(fields: [receiverClassId], references: [id])
+  receiverUser    User?     @relation(fields: [receiverUserId], references: [id])
+}
+
+model EmailSend {
+  id              Int @id @default(autoincrement())
+  emailTemplateId Int
+  senderId        Int
+
+  sender          User             @relation(fields: [senderId], references: [id])
+  emailTemplate   EmailTemplate    @relation(fields: [emailTemplateId], references: [id])
+  emailRecipients EmailRecipient[]
+}
+
+model EmailTemplate {
+  id            Int       @id @default(autoincrement())
+  type          String
+  name          String
+  content       String
+  createdDate   DateTime  @default(now())
+  createdUserId Int
+  updatedDate   DateTime?
+  updatedUserId Int?
+
+  createdUser User        @relation(name: "CreatedEmailTemplates", fields: [createdUserId], references: [id])
+  updatedUser User?       @relation(name: "UpdatedEmailTemplates", fields: [updatedUserId], references: [id])
+  emailSends  EmailSend[]
 }
 
 model StudentClass {

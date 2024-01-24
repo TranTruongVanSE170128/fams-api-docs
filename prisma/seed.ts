@@ -20,15 +20,18 @@ async function main() {
     data: [
       {
         id: 1,
-        programName: 'ASP NET CORE 2024'
+        programName: 'ASP NET CORE 2024',
+        createdUserId: 1
       },
       {
         id: 2,
-        programName: 'The Ultimate React Complete Guide'
+        programName: 'The Ultimate React Complete Guide',
+        createdUserId: 2
       },
       {
         id: 3,
-        programName: 'Software Testing Bootcamp'
+        programName: 'Software Testing Bootcamp',
+        createdUserId: 1
       }
     ]
   })
