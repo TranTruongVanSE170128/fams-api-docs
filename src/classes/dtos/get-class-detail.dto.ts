@@ -4,6 +4,8 @@ import { GetProgramDto } from 'src/programs/dtos/get-program.dto'
 import { GetReservationDto } from 'src/reservations/dtos/get-reservation.dto'
 import { GetScoreDto } from 'src/scores/dtos/get-score.dto'
 import { GetStudentClassModuleDto } from 'src/student-class-modules/dtos/get-student-class-module.dto'
+import { GetStudentClassWithProgramDto } from 'src/student-classes/dtos/get-student-class-with-program.dto'
+import { GetStudentClassWithStudentDto } from 'src/student-classes/dtos/get-student-class-with-student.dto'
 import { GetStudentClassDto } from 'src/student-classes/dtos/get-student-class.dto'
 import { GetStudentDto } from 'src/students/dtos/get-student.dto'
 import { GetUserDto } from 'src/users/dtos/get-user.dto'
@@ -46,10 +48,10 @@ export class GetClassDetailDto {
   programId: number
 
   @ApiResponseProperty({ type: [GetUserDto] })
-  managers: User[]
+  managers: GetUserDto[]
 
   @ApiResponseProperty({ type: GetProgramDto })
-  program: Program
+  program: GetProgramDto
 
   @ApiResponseProperty({ type: GetUserDto })
   createdUser: User
@@ -57,10 +59,7 @@ export class GetClassDetailDto {
   @ApiResponseProperty({ type: GetUserDto })
   updatedUser: User
 
-  @ApiResponseProperty({ type: [GetStudentDto] })
-  students: Student[]
-
-  @ApiResponseProperty({ type: [GetStudentClassDto] })
+  @ApiResponseProperty({ type: [GetStudentClassWithStudentDto] })
   studentClasses: StudentClass[]
 
   @ApiResponseProperty({ type: [GetReservationDto] })

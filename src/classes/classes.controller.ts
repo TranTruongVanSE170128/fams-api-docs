@@ -33,7 +33,7 @@ export class ClassesController {
   @Get(':classId/students/:studentId')
   async getStudentDetailByClass(@Param('classId') classId: string, @Param('studentId') studentId: string) {
     //TODO: the result should be filtered the suitable module and assignment of the student in this class
-    // return await this.classService.getRequiredClassDetailById(Number(id))
+    return await this.classService.getStudentDetailByClass(Number(classId), Number(studentId))
     return {}
   }
 

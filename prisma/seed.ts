@@ -6,12 +6,18 @@ async function main() {
       {
         id: 1,
         role: 'SuperAdmin',
-        fullName: 'Nguyễn Thị Siêu Admin'
+        fullName: 'Nguyễn Thị Siêu Admin',
+        gender: 'Male',
+        email: 'superadmin@gmail.com',
+        password: 'bngfkgbnsdfbsd'
       },
       {
         id: 2,
         role: 'SuperAdmin',
-        fullName: 'Trần Super Admin'
+        fullName: 'Trần Super Admin',
+        gender: 'Female',
+        email: 'superadmin2@gmail.com',
+        password: 'lknnfdsnf'
       }
     ]
   })
@@ -153,25 +159,150 @@ async function main() {
         studentId: 1,
         classId: 1,
         attendingStatus: 'InClass',
-        certificateStatus: 'Disable'
+        certificateStatus: 'Disable',
+        gpaLevel: 'UnScore',
+        result: 'NotYet'
       },
       {
         studentId: 2,
         classId: 2,
         attendingStatus: 'InClass',
-        certificateStatus: 'Disable'
+        certificateStatus: 'Disable',
+        gpaLevel: 'UnScore',
+        result: 'NotYet'
       },
       {
         studentId: 3,
         classId: 3,
         attendingStatus: 'InClass',
-        certificateStatus: 'Disable'
+        certificateStatus: 'Disable',
+        gpaLevel: 'UnScore',
+        result: 'NotYet'
       },
       {
         studentId: 4,
         classId: 2,
         attendingStatus: 'InClass',
-        certificateStatus: 'Disable'
+        certificateStatus: 'Disable',
+        gpaLevel: 'UnScore',
+        result: 'NotYet'
+      }
+    ]
+  })
+
+  await prisma.module.createMany({
+    data: [
+      {
+        id: 1,
+        createdUserId: 1,
+        programId: 2,
+        moduleName: 'FE Essential'
+      }
+    ]
+  })
+
+  await prisma.assignment.createMany({
+    data: [
+      {
+        id: 1,
+        createdUserId: 1,
+        moduleId: 1,
+        assignmentName: 'HTML',
+        assignmentType: 'Quiz'
+      },
+      {
+        id: 2,
+        createdUserId: 1,
+        moduleId: 1,
+        assignmentName: 'CSS',
+        assignmentType: 'Quiz'
+      },
+      {
+        id: 3,
+        createdUserId: 1,
+        moduleId: 1,
+        assignmentName: 'Javascript',
+        assignmentType: 'Quiz'
+      },
+      {
+        id: 4,
+        createdUserId: 1,
+        moduleId: 1,
+        assignmentName: 'Practice 1',
+        assignmentType: 'Assignment'
+      },
+      {
+        id: 5,
+        createdUserId: 1,
+        moduleId: 1,
+        assignmentName: 'Practice 2',
+        assignmentType: 'Assignment'
+      },
+      {
+        id: 6,
+        createdUserId: 1,
+        moduleId: 1,
+        assignmentName: 'Practice 3',
+        assignmentType: 'Assignment'
+      }
+    ]
+  })
+
+  await prisma.score.createMany({
+    data: [
+      {
+        assignmentId: 1,
+        classId: 2,
+        studentId: 2,
+        scoreValue: 7.8,
+        submissionDate: '2024-01-07T00:00:00.000Z'
+      },
+      {
+        assignmentId: 2,
+        classId: 2,
+        studentId: 2,
+        scoreValue: 9.1,
+        submissionDate: '2024-01-07T00:00:00.000Z'
+      },
+      {
+        assignmentId: 3,
+        classId: 2,
+        studentId: 2,
+        scoreValue: 8.5,
+        submissionDate: '2024-01-07T00:00:00.000Z'
+      },
+      {
+        assignmentId: 4,
+        classId: 2,
+        studentId: 2,
+        scoreValue: 8.7,
+        submissionDate: '2024-01-07T00:00:00.000Z'
+      },
+      {
+        assignmentId: 5,
+        classId: 2,
+        studentId: 2,
+        scoreValue: 9.3,
+        submissionDate: '2024-01-07T00:00:00.000Z'
+      },
+      {
+        assignmentId: 6,
+        classId: 2,
+        studentId: 2,
+        scoreValue: 7.9,
+        submissionDate: '2024-01-07T00:00:00.000Z'
+      }
+    ]
+  })
+
+  await prisma.studentClassModule.createMany({
+    data: [
+      {
+        moduleId: 1,
+        classId: 2,
+        studentId: 2,
+        moduleLevel: 1,
+        moduleScore: 8.9
       }
     ]
   })

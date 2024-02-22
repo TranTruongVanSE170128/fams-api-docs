@@ -13,5 +13,5 @@ export class PagedResultStudent {
   pageSize: number
 
   @ApiResponseProperty({ type: [GetStudentDto] })
-  items: GetStudentDto[]
+  items: Student[]
 }

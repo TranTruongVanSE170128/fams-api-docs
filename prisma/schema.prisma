@@ -53,6 +53,9 @@ model User {
   id       Int    @id @default(autoincrement())
   role     Role
   fullName String
+  gender   Gender
+  email    String
+  password String
 
   createdClasses        Class[]          @relation("CreatedClasses")
   updatedClasses        Class[]          @relation("UpdatedClasses")
@@ -90,10 +93,11 @@ model Module {
   createdUserId Int
   updatedDate   DateTime?
   updatedUserId Int?
+  programId     Int
 
   createdUser         User                 @relation(name: "CreatedModules", fields: [createdUserId], references: [id])
   updatedUser         User?                @relation(name: "UpdatedModules", fields: [updatedUserId], references: [id])
-  programs            Program[]
+  program             Program              @relation(fields: [programId], references: [id])
   assignments         Assignment[]
   studentClassModules StudentClassModule[]
 }
@@ -127,12 +131,12 @@ model Score {
 }
 
 model Assignment {
-  id             Int       @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   moduleId       Int
   assignmentName String
-  assignmentType String
-  description    String
-  createdDate    DateTime  @default(now())
+  assignmentType AssignmentType
+  description    String?
+  createdDate    DateTime       @default(now())
   createdUserId  Int
   updatedDate    DateTime?
   updatedUserId  Int?
@@ -214,6 +218,9 @@ model StudentClass {
   attendingStatus   AttendingStatus
   certificateStatus CertificateStatus
   certificateDate   DateTime?
+  result            Result
+  finalScore        Float?
+  gpaLevel          GpaLevel
 
   class   Class   @relation(fields: [classId], references: [id])
   student Student @relation(fields: [studentId], references: [id])
@@ -255,4 +262,24 @@ enum Role {
   SuperAdmin
   ClassAdmin
   Trainer
+}
+
+enum AssignmentType {
+  Quiz
+  Assignment
+}
+
+enum Result {
+  Passed
+  Failed
+  NotYet
+}
+
+enum GpaLevel {
+  APlus
+  A
+  B
+  C
+  D
+  UnScore
 }

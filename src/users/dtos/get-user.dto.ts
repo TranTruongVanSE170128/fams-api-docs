@@ -1,5 +1,5 @@
 import { ApiResponseProperty } from '@nestjs/swagger'
-import { Role } from '@prisma/client'
+import { Gender, Role } from '@prisma/client'
 
 export class GetUserDto {
   @ApiResponseProperty()
@@ -10,4 +10,10 @@ export class GetUserDto {
 
   @ApiResponseProperty()
   fullName: string
+
+  @ApiResponseProperty({ enum: Gender })
+  gender: string
+
+  @ApiResponseProperty()
+  email: string
 }

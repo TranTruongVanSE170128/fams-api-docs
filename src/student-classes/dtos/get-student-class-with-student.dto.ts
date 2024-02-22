@@ -1,7 +1,8 @@
 import { ApiResponseProperty } from '@nestjs/swagger'
 import { AttendingStatus, CertificateStatus, GpaLevel, Result } from '@prisma/client'
+import { GetStudentDto } from 'src/students/dtos/get-student.dto'
 
-export class GetStudentClassDto {
+export class GetStudentClassWithStudentDto {
   @ApiResponseProperty()
   classId: number
 
@@ -25,4 +26,7 @@ export class GetStudentClassDto {
 
   @ApiResponseProperty()
   certificateDate: Date
+
+  @ApiResponseProperty({ type: GetStudentDto })
+  student: GetStudentDto
 }

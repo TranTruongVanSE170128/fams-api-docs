@@ -3,10 +3,12 @@ import { StudentsService } from './students.service'
 import { CreateStudentDto } from 'src/students/dtos/create-student.dto'
 import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { GetStudentDto } from './dtos/get-student.dto'
-import { StudentStatus } from '@prisma/client'
+import { AttendingStatus, StudentStatus } from '@prisma/client'
 import { GetStudentDetailDto } from './dtos/get-student-detail.dto'
 import { UpdateStudentDto } from './dtos/update-student.dto'
 import { PagedResultStudent } from './dtos/paged-result-students.dto'
+import { query } from 'express'
+import { QueryStudentsDto } from './dtos/query-students.dto'
 
 @ApiTags('students')
 @Controller('/api/students')
@@ -20,14 +22,12 @@ export class StudentsController {
   @ApiQuery({ name: 'searchQuery', type: String, required: false })
   @ApiQuery({ name: 'status', type: String, enum: StudentStatus, required: false })
   @Get()
-  async getStudents(
-    @Query() pageSize: number,
-    @Query() pageNumber: number,
-    @Query() searchQuery: string,
-    @Query() status: StudentStatus
-  ) {
-    //TODO: do filter, pagination
-    return await this.studentService.getStudents()
+  async getStudents(@Query() query) {
+    return await this.studentService.getStudents({
+      ...query,
+      pageNumber: Number(query.pageNumber) || 1,
+      pageSize: Number(query.pageSize) || 10
+    })
   }
 
   @ApiOperation({ summary: 'Get student detail by studentId' })

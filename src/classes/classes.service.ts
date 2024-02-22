@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { Class } from '@prisma/client'
+import { Class, Student } from '@prisma/client'
 import { NotFoundError } from 'rxjs'
 import { PrismaService } from 'src/prisma.service'
 
@@ -27,11 +27,24 @@ export class ClassesService {
         id
       },
       include: {
-        students: true,
+        students: {
+          include: {
+            studentClasses: {
+              where: {
+                classId: id
+              }
+            }
+          }
+        },
         createdUser: true,
         managers: true,
         reservations: true,
-        program: true,
+        program: {
+          include: {
+            createdUser: true,
+            updatedUser: true
+          }
+        },
         studentClasses: true,
         updatedUser: true
       }
@@ -42,5 +55,41 @@ export class ClassesService {
     }
 
     throw new NotFoundException('Could not find class')
+  }
+
+  async getStudentDetailByClass(classId: number, studentId: number): Promise<Student> {
+    return await this.prisma.student.findUnique({
+      where: {
+        id: studentId
+      },
+      include: {
+        studentClassModules: {
+          where: {
+            classId
+          },
+          include: {
+            module: true
+          }
+        },
+        scores: {
+          where: {
+            classId
+          },
+          include: {
+            assignment: true
+          }
+        },
+        currentClass: {
+          include: {
+            program: true,
+            studentClasses: {
+              where: {
+                studentId
+              }
+            }
+          }
+        }
+      }
+    })
   }
 }
