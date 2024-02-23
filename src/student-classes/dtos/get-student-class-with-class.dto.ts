@@ -1,8 +1,8 @@
 import { ApiResponseProperty } from '@nestjs/swagger'
 import { AttendingStatus, CertificateStatus } from '@prisma/client'
-import { GetClassWithProgram } from 'src/classes/dtos/get-class-with-program.dto'
+import { GetClassWithProgramDto } from 'src/classes/dtos/get-class-with-program.dto'
 
-export class GetStudentClassWithProgramDto {
+export class GetStudentClassWithClassDto {
   @ApiResponseProperty()
   classId: number
 
@@ -18,6 +18,6 @@ export class GetStudentClassWithProgramDto {
   @ApiResponseProperty()
   certificateDate: Date
 
-  @ApiResponseProperty({ type: GetClassWithProgram })
-  class: GetClassWithProgram
+  @ApiResponseProperty({ type: GetClassWithProgramDto })
+  class: GetClassWithProgramDto
 }

@@ -1,12 +1,22 @@
 import { ApiResponseProperty } from '@nestjs/swagger'
 import { Gender, StudentStatus } from '@prisma/client'
+import { GetClassWithProgramDto } from 'src/classes/dtos/get-class-with-program.dto'
 import { GetClassDto } from 'src/classes/dtos/get-class.dto'
 import { GetReservationDto } from 'src/reservations/dtos/get-reservation.dto'
-import { GetStudentClassWithProgramDto } from 'src/student-classes/dtos/get-student-class-with-program.dto'
+import { GetStudentClassWithClassDto } from 'src/student-classes/dtos/get-student-class-with-class.dto'
 
 export class GetStudentDetailDto {
   @ApiResponseProperty()
   id: number
+
+  @ApiResponseProperty()
+  fullName: string
+
+  @ApiResponseProperty()
+  dob?: Date
+
+  @ApiResponseProperty({ enum: Gender })
+  gender: Gender
 
   @ApiResponseProperty()
   phone: string
@@ -15,16 +25,10 @@ export class GetStudentDetailDto {
   email: string
 
   @ApiResponseProperty()
-  fullName: string
-
-  @ApiResponseProperty({ enum: Gender })
-  gender: Gender
+  university: string
 
   @ApiResponseProperty()
   major: string
-
-  @ApiResponseProperty()
-  dob: Date
 
   @ApiResponseProperty()
   graduatedDate: number
@@ -45,17 +49,14 @@ export class GetStudentDetailDto {
   joinedDate: Date
 
   @ApiResponseProperty()
-  university: string
-
-  @ApiResponseProperty()
   classCode: number
 
-  @ApiResponseProperty()
-  currentClass: GetClassDto
+  @ApiResponseProperty({ type: GetClassWithProgramDto })
+  currentClass?: GetClassWithProgramDto
 
-  @ApiResponseProperty({ type: [GetStudentClassWithProgramDto] })
-  studentClasses: GetStudentClassWithProgramDto[]
-
-  @ApiResponseProperty()
+  @ApiResponseProperty({ type: GetReservationDto })
   reservation: GetReservationDto
+
+  @ApiResponseProperty({ type: [GetStudentClassWithClassDto] })
+  studentClasses: GetStudentClassWithClassDto[]
 }

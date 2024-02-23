@@ -3,7 +3,7 @@ import { AttendingStatus } from '@prisma/client'
 import { IsIn } from 'class-validator'
 
 export class UpdateStudentAttendingStatusDto {
-  @ApiProperty({ enum: ['InClass', 'Reserve', 'Finish', 'DropOut'] })
+  @ApiProperty({ enum: AttendingStatus })
   @IsIn(['InClass', 'Reserve', 'Finish', 'DropOut'], {
     message: 'The attendingStatus should be InClass, Reserve, Finish, or DropOut'
   })

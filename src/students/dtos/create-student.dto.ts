@@ -33,7 +33,7 @@ export class CreateStudentDto {
   @MinLength(2, { message: 'Invalid full name' })
   fullName: string
 
-  @ApiProperty()
+  @ApiProperty({ enum: Gender })
   @IsIn(['Male', 'Female'], { message: 'Invalid gender' })
   gender: Gender
 

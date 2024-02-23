@@ -1,4 +1,6 @@
 import { ApiResponseProperty } from '@nestjs/swagger'
+import { GetClassWithProgramDto } from 'src/classes/dtos/get-class-with-program.dto'
+import { GetClassDto } from 'src/classes/dtos/get-class.dto'
 
 export class GetReservationDto {
   @ApiResponseProperty()
@@ -18,4 +20,7 @@ export class GetReservationDto {
 
   @ApiResponseProperty()
   endDate: Date
+
+  @ApiResponseProperty({ type: GetClassWithProgramDto })
+  class: GetClassWithProgramDto
 }

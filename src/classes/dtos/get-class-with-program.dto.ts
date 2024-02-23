@@ -2,7 +2,7 @@ import { ApiResponseProperty } from '@nestjs/swagger'
 import { ClassStatus, Program, User } from '@prisma/client'
 import { GetProgramDto } from 'src/programs/dtos/get-program.dto'
 
-export class GetClassWithProgram {
+export class GetClassWithProgramDto {
   @ApiResponseProperty()
   id: number
 

@@ -15,8 +15,8 @@ import {
 
 export class UpdateStudentDto {
   @ApiPropertyOptional()
-  @Matches(/^0\d{9}$/, {
-    message: 'Invalid phone number'
+  @Matches(/^(\+84|0)[1-9]\d{8}$/, {
+    message: "Invalid phone number. It should be in the format '+84xxxxxxxxx' or '0xxxxxxxxx'."
   })
   @IsOptional()
   phone?: string
@@ -26,7 +26,7 @@ export class UpdateStudentDto {
   @IsOptional()
   fullName?: string
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ enum: Gender })
   @IsIn(['Male', 'Female'], { message: 'Invalid gender' })
   @IsOptional()
   gender?: Gender

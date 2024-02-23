@@ -8,33 +8,33 @@ import * as path from 'path'
 export class FilesController {
   @ApiOperation({
     summary:
-      'Just access this endpoint by <Link href="/api/files/add-students-template"></Link>, then you get add-students-template.xlsx'
+      'Just access this endpoint by <Link href="/api/files/student-template"></Link>, then you get student-template.xlsx'
   })
-  @Get('add-students-template')
+  @Get('student-template')
   getAddStudentsTemplate(@Res() res: Response) {
-    const xlsxFilePath = path.join(__dirname, '../../public/add-students-template.xlsx')
+    const xlsxFilePath = path.join(__dirname, '../../public/student-template.xlsx')
 
     // Thiết lập header cho response để browser hiểu rằng đây là một file tải về
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    res.setHeader('Content-Disposition', 'attachment; filename=add-students-template.xlsx')
+    res.setHeader('Content-Disposition', 'attachment; filename=student-template.xlsx')
 
     // Đọc file XLSX và ghi nó vào response
     res.sendFile(xlsxFilePath)
   }
 
-  @ApiOperation({
-    summary:
-      'Just access this endpoint by <Link href="/api/files/add-scores-template"></Link>, then you get add-scores-template.xlsx'
-  })
-  @Get('add-scores-template')
-  getAddScoresTemplate(@Res() res: Response) {
-    const xlsxFilePath = path.join(__dirname, '../../public/add-scores-template.xlsx')
+  // @ApiOperation({
+  //   summary:
+  //     'Just access this endpoint by <Link href="/api/files/add-scores-template"></Link>, then you get add-scores-template.xlsx'
+  // })
+  // @Get('add-scores-template')
+  // getAddScoresTemplate(@Res() res: Response) {
+  //   const xlsxFilePath = path.join(__dirname, '../../public/add-scores-template.xlsx')
 
-    // Thiết lập header cho response để browser hiểu rằng đây là một file tải về
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    res.setHeader('Content-Disposition', 'attachment; filename=add-scores-template.xlsx')
+  //   // Thiết lập header cho response để browser hiểu rằng đây là một file tải về
+  //   res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  //   res.setHeader('Content-Disposition', 'attachment; filename=add-scores-template.xlsx')
 
-    // Đọc file XLSX và ghi nó vào response
-    res.sendFile(xlsxFilePath)
-  }
+  //   // Đọc file XLSX và ghi nó vào response
+  //   res.sendFile(xlsxFilePath)
+  // }
 }
