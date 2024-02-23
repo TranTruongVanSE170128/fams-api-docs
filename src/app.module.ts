@@ -13,8 +13,9 @@ import { FilesController } from './files/files.controller'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
 import { MulterModule } from '@nestjs/platform-express'
-import { ReservationsController } from './reservations/reservations.controller';
-import { AuthController } from './auth/auth.controller';
+import { ReservationsController } from './reservations/reservations.controller'
+import { AuthController } from './auth/auth.controller'
+import { AppController } from './app.controller'
 
 @Module({
   // imports: [
@@ -27,7 +28,14 @@ import { AuthController } from './auth/auth.controller';
       dest: './uploads' // Destination directory for temporarily storing files (you can change this)
     })
   ],
-  controllers: [StudentsController, ClassesController, FilesController, ReservationsController, AuthController],
+  controllers: [
+    StudentsController,
+    ClassesController,
+    FilesController,
+    ReservationsController,
+    AuthController,
+    AppController
+  ],
   providers: [
     StudentsService,
     PrismaService,
