@@ -21,18 +21,18 @@ export class StudentsController {
   @ApiQuery({ name: 'status', type: String, enum: StudentStatus, required: false })
   @Get()
   async getStudents(@Query() query) {
-    return await this.studentService.getStudents({
-      ...query,
-      pageNumber: Number(query.pageNumber) || 1,
-      pageSize: Number(query.pageSize) || 10
-    })
+    // return await this.studentService.getStudents({
+    //   ...query,
+    //   pageNumber: Number(query.pageNumber) || 1,
+    //   pageSize: Number(query.pageSize) || 10
+    // })
   }
 
   @ApiOperation({ summary: 'Get student detail by studentId' })
   @ApiResponse({ status: 200, description: 'Success', type: GetStudentDetailDto })
   @Get(':id')
   async getStudentDetail(@Param('id') id: string) {
-    return await this.studentService.getRequiredStudentDetailById(Number(id))
+    // return await this.studentService.getRequiredStudentDetailById(Number(id))
   }
 
   @ApiOperation({

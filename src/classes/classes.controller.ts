@@ -69,9 +69,7 @@ export class ClassesController {
     @Param('id') id: string,
     @Body() body: ImportStudentsDto,
     @UploadedFile() addStudentsTemplate
-  ) {
-    //TODO
-  }
+  ) {}
 
   // @ApiOperation({
   //   summary: 'Import scores to an specified class by template excel file'

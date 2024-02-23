@@ -12,14 +12,12 @@ export class FilesController {
   })
   @Get('student-template')
   getAddStudentsTemplate(@Res() res: Response) {
-    const xlsxFilePath = path.join(__dirname, '../../public/student-template.xlsx')
-
-    // Thiết lập header cho response để browser hiểu rằng đây là một file tải về
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    res.setHeader('Content-Disposition', 'attachment; filename=student-template.xlsx')
-
-    // Đọc file XLSX và ghi nó vào response
-    res.sendFile(xlsxFilePath)
+    // const xlsxFilePath = path.join(__dirname, '../../public/student-template.xlsx')
+    // // Thiết lập header cho response để browser hiểu rằng đây là một file tải về
+    // res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    // res.setHeader('Content-Disposition', 'attachment; filename=student-template.xlsx')
+    // // Đọc file XLSX và ghi nó vào response
+    // res.sendFile(xlsxFilePath)
   }
 
   // @ApiOperation({
